@@ -19,7 +19,7 @@ setup(
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     description='A django app of supervisor monitor',
-    author='x007007007',
+    author='xingci.xu',
     author_email='x007007007@hotmail.com',
     url='https://github.com/x007007007/',
     package_data=package_data,
