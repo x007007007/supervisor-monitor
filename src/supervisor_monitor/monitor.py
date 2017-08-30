@@ -46,7 +46,7 @@ class Monitor(object):
         try:
             return self.getRpcServer().supervisor.getState()['statecode']
         except:
-            return -2
+            return -100
 
     def getPid(self):
         try:

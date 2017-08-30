@@ -4,7 +4,7 @@ from .models import SupervisorService
 # Register your models here.
 
 class SupervisorAdmin(admin.ModelAdmin):
-    list_display = ('url', 'identification')
+    list_display = ('url', 'identification', 'status')
     search_fields = ('url', 'identification')
     readonly_fields = ('identification', 'status')
 
@@ -20,12 +20,19 @@ class SupervisorAdmin(admin.ModelAdmin):
         for item in queryset:
             item.restart()
 
-    actions = ("action_reload", "action_restart", "action_shutdown")
+    def action_refresh_services(self, request, queryset):
+        for item in queryset:
+            item.refresh_services()
+
+    actions = ("action_reload", "action_restart", "action_shutdown", "action_refresh_services")
 
 
 class SupervisorServiceAdmin(admin.ModelAdmin):
-    readonly_fields = ("name", "group", "supervisor", "status")
-    list_display = ("name", "group", "supervisor", "status", "description")
+    readonly_fields = (
+        "name", "group", "supervisor", "status", "modify_time",
+        "pid", "state", "exit_status", "start_timestamp", "now_timestamp", "stop_timestamp"
+    )
+    list_display = ("name", "group", "supervisor", "status", "description", "modify_time")
     list_filter = ("supervisor", "group")
     search_fields = ("name", "supervisor__identification")
 
