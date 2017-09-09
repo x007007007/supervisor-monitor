@@ -1,10 +1,67 @@
+<i18n>
+en:
+  SHUTDOWN: "SHUTDOWN!"
+  FATAL: "FATAL"
+  RESTARTING: "RESTARTING"
+  RUNNING: "RUNNING"
+  OFFLINE: "OFFLINE"
+zh_CN:
+  SHUTDOWN: "关闭"
+  FATAL: "失败"
+  RESTARTING: "重启中"
+  RUNNING: "运行中"
+  OFFLINE: "离线"
+</i18n>
+
 <template>
-  <div class="list supervisor-list">
+  <div class="supervisor_list">
+    <button v-on:click="refresh">refresh</button>
     <ul>
-      <li v-for="item in supervisor_list">
-        {{ supervisor_list.status }}
-        <supervisor-service-list></supervisor-service-list>
+      <li v-for="sinfo in supervisor_list" v-on:click="selectedById(sinfo.identification)">
+          <span class="identification">{{ sinfo.identification }}</span>
+          <span class="ip">{{ sinfo.ip }}</span>
+          <span class="pid">{{ sinfo.pid }}</span>
+          <span class="state">{{ $t(sinfo.state_name) }}</span>
+          <service-list :supervisor_id="sinfo.identification"></service-list>
       </li>
     </ul>
   </div>
 </template>
+
+
+<script>
+  import { supervisorListApi } from '@/api/supervisor'
+
+  export default {
+    props: {
+      selected: String
+    },
+    components: {
+      'service-list': () => import('@/components/SupervisorServiceList')
+    },
+    data: () => {
+      return {
+        locale: 'zh_CN',
+        supervisor_list: []
+      }
+    },
+    methods: {
+      async refresh () {
+        this.supervisor_list = await supervisorListApi()
+      },
+      selectedById (identification) {
+        this.selected = identification
+      }
+    },
+    mounted: function () {
+      this.$i18n.locale = 'zh_CN'
+      this.refresh()
+    },
+    watch: {
+      locale (val) {
+        console.log(val)
+        this.$i18n.locale = val
+      }
+    }
+  }
+</script>

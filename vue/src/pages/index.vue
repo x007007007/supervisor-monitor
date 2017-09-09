@@ -1,39 +1,27 @@
 <template>
-  <div class="supervisor_list">
-    <button v-on:click="refresh">refresh</button>
-    <ul>
-      <li v-for="sinfo in supervisor_list">
-          <span class="identification">{{ sinfo.identification }}</span>
-          <span class="ip">{{ sinfo.ip }}</span>
-          <span class="pid">{{ sinfo.pid }}</span>
-      </li>
-    </ul>
+  <div class="row">
+    <supervisor-list :selected.sync="supervisor_id" ></supervisor-list>
+    <service-list :sueprvisor_id="supervisor_id"></service-list>
   </div>
 </template>
 
 
 <script>
   export default {
-    state: {
-      supervisor_list: null
-    },
     data: () => {
       return {
-        supervisor_list: []
+        supervisor_id: null
       }
     },
-    methods: {
-      async refresh () {
-        this.supervisor_list = (await (await fetch('http://127.0.0.1:8000/monitor/api/supervisor/')).json()).data
-      }
-    },
-    mounted: function () {
-      this.refresh()
+    components: {
+      'supervisor-list': () => import('@/components/SupervisorList'),
+      'service-list': () => import('@/components/SupervisorServiceList')
     }
   }
 </script>
 
 
-<style lang="stylus">
-
+<style scoped lang="stylus">
+.supervisor_list
+  width: 100px;
 </style>
