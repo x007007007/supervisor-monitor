@@ -9,7 +9,7 @@ export async function supervisorServiceStop (supervisorId, name) {
   console.log(`stop ${supervisorId}, ${name}`)
 }
 
-export async function supervisorIdServiceStart (supervisorId, name) {
+export async function supervisorServiceStart (supervisorId, name) {
   console.log(`start ${supervisorId}, ${name}`)
 }
 

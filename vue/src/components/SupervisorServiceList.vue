@@ -31,20 +31,20 @@ zh_CN:
         {{ item.state }}
         {{ item.start_timestamp }}
         {{ item.now_timestamp }}
-        <button>restart</button>
-        <button>stop</button>
-        <button>start</button>
+        <button v-on:click="restart(item.name)">restart</button>
+        <button v-on:click="stop(item.name)">stop</button>
+        <button v-on:click="start(item.name)">start</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  import { supervisorServicesList } from '@/api/supervisorService'
+  import { supervisorServicesList, supervisorServiceStop, supervisorServiceRestart, supervisorServiceStart } from '@/api/supervisorService'
 
   export default {
     props: {
-      supervisor_id: null
+      supervisor_id: String
     },
     data: () => {
       return {
@@ -58,6 +58,15 @@ zh_CN:
         } else {
           this.service_list = []
         }
+      },
+      async start (name) {
+        supervisorServiceStart(this.supervisor_id, name)
+      },
+      async stop (name) {
+        supervisorServiceStop(this.supervisor_id, name)
+      },
+      async restart (name) {
+        supervisorServiceRestart(this.supervisor_id, name)
       }
     },
     mounted: function () {

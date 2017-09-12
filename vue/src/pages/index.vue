@@ -22,6 +22,5 @@
 
 
 <style scoped lang="stylus">
-.supervisor_list
-  width: 100px;
+
 </style>
