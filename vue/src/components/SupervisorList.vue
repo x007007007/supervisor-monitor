@@ -17,7 +17,7 @@ zh_CN:
 
 <template>
   <div class="supervisor_list">
-    <button v-on:click="refresh">refresh</button>
+    <button class="refresh" v-on:click="refresh">refresh</button>
     <ul>
       <li class="supervisor" v-for="sinfo in supervisor_list" >
         <div class="info">
@@ -29,9 +29,9 @@ zh_CN:
             <span class="pid"> PID: {{ sinfo.pid }}</span>
             <span class="state">{{ $t('state') }}:{{ $t(sinfo.state_name) }}</span>
           </p>
+          <button class="more" v-on:click="selectedById(sinfo.identification)" v-show="clicked != sinfo.identification">more</button>
+          <button class="less" v-on:click="selectedById(null)" v-show="clicked == sinfo.identification">less</button>
         </div>
-        <p v-on:click="selectedById(sinfo.identification)" v-show="clicked != sinfo.identification">more</p>
-        <p v-on:click="selectedById(null)" v-show="clicked == sinfo.identification">less</p>
         <service-list :supervisor_id="sinfo.identification" v-show="clicked == sinfo.identification"></service-list>
       </li>
     </ul>
@@ -39,13 +39,39 @@ zh_CN:
 </template>
 
 <style scoped lang="stylus">
-
+  body
+    padding: 0;
+    margin: 0;
+    div.supervisor_list
+      position: relative;
+      width: 300px;
+      height: 100%;
+      padding-top: 32px;
+      button.refresh
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        text-indent: -9999999999px;
+        background-color: #4CAF50; /* Green */
+        width: 32px;
+        height: 32px;
+      ul
+        li.supervisor
+          list-style-type: none;
+          div.info
+            position: relative;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100px;
+            border: solid 1px;
+            button.more, button.less
+              width: 100%;
+              position: absolute;
+              bottom: 0px;
+              right: 0px;
 </style>
-  div.supervisor_list
-    ul
-      li.supervisor
-        div.info
-          width: 300px;
+
 <script>
   import { supervisorListApi } from '@/api/supervisor'
 
