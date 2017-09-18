@@ -24,3 +24,7 @@ export async function supervisorListApi (supervisorId) {
   }
   return res
 }
+
+export async function supervisorReload (supervisorId) {
+  return null
+}

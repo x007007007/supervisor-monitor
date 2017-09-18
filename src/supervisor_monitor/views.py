@@ -141,7 +141,9 @@ def supervisor_service_stop_view(request, supervisor_id, service_name):
     if request.method == "POST":
         supervisor = Supervisor.objects.get(identification=supervisor_id)
         supervisor.monitor().stop(service_name)
-
+    return JsonResponse({
+        "msg": "not allow",
+    }, status=405)
 
 @csrf_exempt
 def supervisor_service_start_view(request, supervisor_id, service_name):
@@ -151,7 +153,9 @@ def supervisor_service_start_view(request, supervisor_id, service_name):
         return JsonResponse({
             "status": 1
         })
-
+    return JsonResponse({
+        "msg": "not allow",
+    }, status=405)
 
 @csrf_exempt
 def supervisor_service_restart_view(request, supervisor_id, service_name):
@@ -161,3 +165,6 @@ def supervisor_service_restart_view(request, supervisor_id, service_name):
         return JsonResponse({
             "status": 1
         })
+    return JsonResponse({
+        "msg": "not allow",
+    }, status=405)

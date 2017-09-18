@@ -22,6 +22,14 @@ urlpatterns = [
         views.supervisor_service_stop_view
     ),
     url(
+        r'^api/supervisor/(?P<supervisor_id>.*?)/prog/(?P<service_name>.*?)/start/$',
+        views.supervisor_service_start_view
+    ),
+    url(
+        r'^api/supervisor/(?P<supervisor_id>.*?)/prog/(?P<service_name>.*?)/stop/$',
+        views.supervisor_service_restart_view
+    ),
+    url(
         r'^api/supervisor/(?P<supervisor_id>.*?)/prog/(?P<service_name>.*?)/console/$',
         views.supervisor_service_console_view
     ),

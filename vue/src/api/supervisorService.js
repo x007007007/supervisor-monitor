@@ -1,4 +1,4 @@
-import { get } from './api'
+import { get, post } from './api'
 
 export async function supervisorServicesList (supervisorId) {
   let list = (await (await get(`/monitor/api/supervisor/${supervisorId}/prog/`)).json()).data
@@ -6,14 +6,17 @@ export async function supervisorServicesList (supervisorId) {
 }
 
 export async function supervisorServiceStop (supervisorId, name) {
-  console.log(`stop ${supervisorId}, ${name}`)
+  let res = await (await post(`/monitor/api/supervisor/${supervisorId}/prog/${name}/stop/`).json()).data
+  return res
 }
 
 export async function supervisorServiceStart (supervisorId, name) {
-  console.log(`start ${supervisorId}, ${name}`)
+  let res = await (await post(`/monitor/api/supervisor/${supervisorId}/prog/${name}/start/`).json()).data
+  return res
 }
 
 export async function supervisorServiceRestart (supervisorId, name) {
-  console.log(`restart ${supervisorId}, ${name}`)
+  let res = await (await post(`/monitor/api/supervisor/${supervisorId}/prog/${name}/restart/`).json()).data
+  return res
 }
 
