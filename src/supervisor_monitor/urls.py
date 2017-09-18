@@ -7,11 +7,11 @@ urlpatterns = [
     url(r'^api/supervisor/$', views.supervisor_view),
     url(
         r'^api/supervisor/(?P<supervisor_id>.*?)/reload/$',
-        views.supervisor_reload
+        views.supervisor_reload_view
     ),
     url(
         r'^api/supervisor/(?P<supervisor_id>.*?)/restart/$',
-        views.supervisor_restart
+        views.supervisor_restart_view
     ),
     url(
         r'^api/supervisor/(?P<supervisor_id>.*?)/prog/$',

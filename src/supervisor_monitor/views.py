@@ -41,12 +41,14 @@ def supervisor_view(request):
             sd = {
                 "identification": supervisor.identification,
                 "pid": -1,
-
+                "url": supervisor.url
             }
             try:
                 sd['pid'] = supervisor.monitor().getPid()
                 sd['state'] = supervisor.monitor().getStatus()
             except:
+                import traceback
+                traceback.print_exc()
                 sd['state'] = -2
             res.append(sd)
         return JsonResponse({
@@ -54,7 +56,7 @@ def supervisor_view(request):
         })
 
 @csrf_exempt
-def supervisor_reload(request, supervisor_id):
+def supervisor_reload_view(request, supervisor_id):
     if request.method == "POST":
         supervisor = Supervisor.objects.get(identification=supervisor_id)
         return JsonResponse({
@@ -62,7 +64,7 @@ def supervisor_reload(request, supervisor_id):
         })
 
 @csrf_exempt
-def supervisor_restart(request, supervisor_id):
+def supervisor_restart_view(request, supervisor_id):
     if request.method == "POST":
         supervisor = Supervisor.objects.get(identification=supervisor_id)
         return JsonResponse({

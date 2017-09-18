@@ -8,7 +8,7 @@ class Supervisor(models.Model):
     OFFLINE = -100
 
     url = models.URLField(help_text="supervisor web url")
-    identification = models.CharField(max_length=254, help_text="supervisor server identification", unique=True)
+    identification = models.CharField(max_length=254, help_text="supervisor server identification")
     username = models.CharField(max_length=128, null=True, blank=True)
     password = models.CharField(max_length=128, null=True, blank=True)
 
